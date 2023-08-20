@@ -188,7 +188,7 @@ def main(collectionName):
                 print(weblist["titleslect"])
                 print('soup')
                 # title = soup.select(weblist["titleslect"])[0].get_text()
-                print(title)
+               
                 print('title')
                 print('file_pathhanshiyaobu.txt5')
                 print(weblist["name"] +"新的网页内容是" + title)
