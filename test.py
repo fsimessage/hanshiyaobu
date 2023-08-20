@@ -6,7 +6,7 @@ import hashlib
 
 import cpca
 from datetime import datetime
-from easygoogletranslate import EasyGoogleTranslateOne
+from easygoogletranslate import EasyGoogleTranslate
 import random
 
 class DB:
@@ -298,7 +298,7 @@ def main(collectionName):
                     current_timestamp = int(time.time())
                     print("Current Timestamp:", current_timestamp)
                     Orgincontent = nation + product + content
-                    from easygoogletranslate import EasyGoogleTranslate
+                    
 
                     translator = EasyGoogleTranslate(
                         source_language='ko',
