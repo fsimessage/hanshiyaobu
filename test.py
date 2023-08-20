@@ -187,7 +187,7 @@ def main(collectionName):
                 soup = BeautifulSoup(response, 'html.parser', from_encoding='utf-8')
                 print(weblist["titleslect"])
                 print('soup')
-                title = soup.select(weblist["titleslect"])[0].get_text()
+                # title = soup.select(weblist["titleslect"])[0].get_text()
                 print(title)
                 print('title')
                 print('file_pathhanshiyaobu.txt5')
