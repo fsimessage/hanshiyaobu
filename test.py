@@ -1,3 +1,22 @@
+# -*- coding: utf-8 -*-
+import time
+import os
+import requests
+import json
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+
+from selenium.webdriver.common.by import By
+options = Options()
+options.add_argument("--headless=new")
+options.add_argument("--no-sandbox")
+options.add_argument('--ignore-certificate-errors')
+options.add_argument('--disable-gpu')
+options.add_argument('--remote-debugging-port=9222')
+options.add_argument('--hide-scrollbars')
+s = Service('bin/chromedriver')
+driver = webdriver.Chrome(service=s, options=options)
 import requests
 import json
 import time
@@ -164,7 +183,241 @@ def translationBDE(content):
     }
 
     response = requests.get('http://api.fanyi.baidu.com/api/trans/vip/translate', head)
-    return response.json()['trans_result'][0]['dst']                   
+    return response.json()['trans_result'][0]['dst']     
+
+
+def main2(collectionName):
+
+    while True:
+        try:
+            dir_path = os.path.dirname(os.path.abspath(__file__))
+            file_path = os.path.join(dir_path, "hanshiyaobu.txt")
+            print('file_pathhanshiyaobu.txt')
+            web_data = json.loads(open(file_path, 'r', encoding='utf_8_sig').read())
+            print('file_pathhanshiyaobu.txt2')
+            for weblist in web_data["cities"][0:1]:
+                print('file_pathhanshiyaobu.txt3')
+                print(time.asctime(time.localtime(time.time())))
+                print('正在检索', weblist["name"], '页面更新')
+                url = weblist["url"]
+                print("url")
+                print(url)
+                driver.get(weblist["url"])
+                time.sleep(2)
+                titles = driver.find_element(By.CSS_SELECTOR,weblist["titleslect"])
+                title = titles.text
+                print("newis" +title)
+                # response = requests.get(url, headers=UserAgent(),timeout=(55,55)).content
+                
+                # print('file_pathhanshiyaobu.txt4')
+                # soup = BeautifulSoup(response, 'html.parser', from_encoding='utf-8')
+                # print(weblist["titleslect"])
+                # # print(soup)
+                # title2 = soup.select(weblist["titleslect"])[0]
+                print(title2)
+                print('file_pathhanshiyaobu.txt5')
+                title = soup.select(weblist["titleslect"])[0].get_text()
+               
+                print('title')
+                print('file_pathhanshiyaobu.txt6')
+                print(weblist["name"] +"新的网页内容是" + title)
+                print(weblist["name"] +"旧的网页内容是" + weblist["title"])  
+                print('file_pathhanshiyaobu.txt6')
+                if True:    # 开关
+                # if title == weblist["title"] :    # 开关       
+                    print('file_pathhanshiyaobu.txt7')
+                    try:
+                        try:
+                            nation = soup.select(weblist["nationslect"])[0].get_text()
+                        except IndexError:
+                            nation = "未获取到国家信息"
+                            print(nation)
+                        
+                        if nation:
+                            # 进行翻译
+                            print(nation)
+                            
+                            nation_translation = translationBD(nation)
+                            print("国家是：" + nation_translation)
+                        else:
+                            nation = "None"
+                            print("国家变量为空")
+                        
+                        # 获取产品信息
+                        try:
+                            product = soup.select(weblist["productslect"])[0].get_text()
+                        except IndexError:
+                            product = "未获取到产品信息"
+                            print(product)
+                        
+                        if product:
+                            product_translation = translationBD(product)
+                            print("产品是：" + product_translation)
+
+                        else:
+                            product = "None"
+                            print("产品变量为空")
+                        
+                        # 获取英文产品信息
+                        try:
+                            enproduct = soup.select(weblist["enproductslect"])[0].get_text()
+                        except IndexError:
+                            enproduct = "NONE"
+                        
+                        if enproduct:
+                            enproduct_translation = translationBDE(enproduct)
+                            print("英文产品是：" + enproduct_translation)
+
+                        else:
+                            enproduct_translation = "英文产品变量为空"
+                            print("英文产品变量为空")
+                        
+                        # 获取内容信息
+                        try:
+                            content = soup.select(weblist["contentslect"])[0].get_text()
+                        except IndexError:
+                            content = "未获取到内容信息"
+                        
+                        if content:
+                            content_translation = translationBD(content)
+                            print("内容是：" + content_translation)
+
+                        else:
+                            content_translation = "内容变量为空"
+                            print("内容变量为空")
+                        try:
+                            baozhidate = soup.select(weblist["baozhidateslect"])[0].get_text()
+                        except IndexError:
+                            baozhidate = ""
+                            print(baozhidate)
+                        if baozhidate:
+                            baozhidate="；保质期："+baozhidate
+                            print(baozhidate)
+
+                        else:
+                            baozhidate = ""
+                        
+                        
+                        # 获取公司信息
+                        try:
+                            company = soup.select(weblist["companyslect"])[0].get_text()
+                        except IndexError:
+                            company = "未获取到公司信息"
+                        
+                        if company:
+                            company_translation = translationBDE(company)
+
+                            print("公司是：" + company_translation)
+
+                            
+                            # 对公司名称进行地址解析
+        
+                            address = "中国"            
+                            try:
+                                ret = cpca.transform_text_with_addrs(company_translation, pos_sensitive=True)
+                                address = f"{ret.loc[0, '省']}{ret.loc[0, '市']}"
+                                print("地址是：" + address)
+                            except:
+                                address = "中国"
+                                pass
+                        else:
+                            company_translation = "公司变量为空"
+                            print("公司变量为空")
+                        
+                    except Exception as e:
+                        print("发生异常：", e)
+                        
+                # 省略其他翻译逻辑
+                    current_datetime = datetime.now()
+
+                    # 将日期时间格式化为指定格式
+                    formatted_date = current_datetime.strftime('%Y-%m-%d')
+
+                    # 输出格式化后的日期
+                    print(formatted_date)
+                    current_timestamp = int(time.time())
+                    print("Current Timestamp:", current_timestamp)
+                    Orgincontent = nation + product + content
+                    
+
+                    translator = EasyGoogleTranslate(
+                        source_language='ko',
+                        target_language='zh-CN',
+                        timeout=10
+                    )
+                    Orgincontenttranslate = translator.translate(Orgincontent)
+
+                    print(Orgincontenttranslate) 
+                     
+                    foodsafetitle = "韩国通报我国产的"+ content_translation +"的"+ product_translation +"（通报号：无）"
+                    new_data = [{               
+                        "sectionCode": "yjhzh",
+                        "sectionName": "预警和召回",
+                        "prodCateCode": "015",
+                        "countryRegionCode": "410",
+                        "unqualifiedCauseCode": "006",
+                        "unqualifiedItemCode": "",
+                        "infoTitle": foodsafetitle,
+                        "infoType": "1",
+                        "prodCateName": "产品分类/其他植物源性食品类",
+                        "countryRegionName": "韩国",
+                        "circularNumber": "",
+                        "sourceArea": nation_translation,
+                        "localAddress": address,
+                        "enterprise": company,
+                        "productName": "产品名称:"+product_translation+"；不合格原因:"+content_translation+ baozhidate,
+                        "publishOrg": "食药部",
+                        "brand": "/",
+                        "unqualifiedItemName": "品质",
+                        "unqualifiedCauseName": "不合格原因/污染物",
+                        "measure": "境外通报",
+                        "sourceAddress": "https://impfood.mfds.go.kr/CFCEE01F01",
+                        "sourcePublTime": formatted_date,
+                        "Current Timestamp":current_timestamp, 
+                        "Orgincontent":Orgincontenttranslate+"产品名称英文翻译："+enproduct_translation,
+                        "content": ""
+
+                    }]
+
+                    new_data = "{data:%s}" % new_data
+                    print(new_data)
+                    db = DB()
+                    accessToken = db.get_access_token()  # 获取访问令牌
+                    query = f"db.collection('{collectionName}').add({new_data})"  # 添加数据语句
+                    result = db.access_database(accessToken, "databaseadd", query)
+                    print('插入数据：')
+                    print(result)
+                    print("成功添加数据")
+                    weblist["title"] = title
+                    weblist["nation"] = nation
+                    weblist["product"] = product
+                    weblist["enproduct"] = enproduct
+                    weblist["content"] = content
+                    weblist["company"] = company
+                    
+
+                    print("有更新内容是" + weblist["title"])
+                    jsondata = json.dumps(web_data, ensure_ascii=False)  # 序列化简化
+                    print('已打包json')
+                    write_json(jsondata)
+                    print('已写入json文件')
+                    print('发送消息')
+                    urlnotice = "http://wxpusher.zjiecode.com/api/send/message/?appToken=AT_zNMq0y9vMvgbelbxmTqwd7xCYb7mDFJT&content="+ weblist["name"] + weblist["title"] + Orgincontenttranslate +"&uid=UID_Yfd6ZRU7rWQVCcFYXAus5IfNGQsP&url=http%3a%2f%2fwxpusher.zjiecode.com"
+                    requests.get(urlnotice)
+                    print('已发送微信')
+                    # message = "韩国通报" + title + "（通报号：无）/国家地区：韩国/发布机构：食药部/企业：/采取措施：境外通报/" + "网址：" + weblist["url"]
+
+                    # sendwxmessage(message)
+                    # print(message)
+                
+
+        except Exception as e:
+            print(f"程序异常,错误:{e}")
+            print('发送消息')
+            urlnotice = "http://wxpusher.zjiecode.com/api/send/message/?appToken=AT_zNMq0y9vMvgbelbxmTqwd7xCYb7mDFJT&content="+ weblist["name"] +"出现错误!"+"&uid=UID_Yfd6ZRU7rWQVCcFYXAus5IfNGQsP&url=http%3a%2f%2fwxpusher.zjiecode.com"
+            requests.get(urlnotice)
+            print('已发送微信')
+        time.sleep(45)  # 暂停60秒后继续下一轮
 def main(collectionName):
 
     while True:
