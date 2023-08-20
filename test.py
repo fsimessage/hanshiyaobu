@@ -384,7 +384,7 @@ if __name__ == '__main__':
         main('test')
     except Exception as e:
         print(f"程序异常,错误:{e}")
-        traceback.print_exc()
+
     
 
 
