@@ -185,7 +185,7 @@ def main(collectionName):
                 title = soup.select(weblist["titleslect"])[0].get_text()
                 print(weblist["name"] +"新的网页内容是" + title)
                 print(weblist["name"] +"旧的网页内容是" + weblist["title"])      
-                if title != weblist["title"] :    # 开关       
+                if title == weblist["title"] :    # 开关       
                     try:
                         try:
                             nation = soup.select(weblist["nationslect"])[0].get_text()
