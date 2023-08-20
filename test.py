@@ -167,16 +167,15 @@ def translationBDE(content):
     return response.json()['trans_result'][0]['dst']                   
 def main(collectionName):
 
-    
-    
-    
     while True:
         try:
             dir_path = os.path.dirname(os.path.abspath(__file__))
             file_path = os.path.join(dir_path, "hanshiyaobu.txt")
-            print(file_path)
+            print('file_pathhanshiyaobu.txt')
             web_data = json.loads(open(file_path, 'r', encoding='utf_8_sig').read())
+            print('file_pathhanshiyaobu.txt2')
             for weblist in web_data["cities"][0:1]:
+                print('file_pathhanshiyaobu.txt3')
                 print(time.asctime(time.localtime(time.time())))
                 print('正在检索', weblist["name"], '页面更新')
                 url = weblist["url"]
