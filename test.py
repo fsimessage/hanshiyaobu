@@ -185,7 +185,11 @@ def main(collectionName):
                 
                 print('file_pathhanshiyaobu.txt4')
                 soup = BeautifulSoup(response, 'html.parser', from_encoding='utf-8')
+                print(soup)
+                print('soup')
                 title = soup.select(weblist["titleslect"])[0].get_text()
+                print(title)
+                print('title')
                 print('file_pathhanshiyaobu.txt5')
                 print(weblist["name"] +"新的网页内容是" + title)
                 print(weblist["name"] +"旧的网页内容是" + weblist["title"])  
