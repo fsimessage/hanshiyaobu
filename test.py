@@ -184,7 +184,7 @@ def main(collectionName):
                 response = requests.get(url, headers=UserAgent(),timeout=(55,55)).content
                 
                 print('file_pathhanshiyaobu.txt4')
-                soup = BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
+                soup = BeautifulSoup(response, 'html.parser', from_encoding='utf-8')
                 print(weblist["titleslect"])
                 print(soup)
                 title2 = soup.select(weblist["titleslect"])[0]
