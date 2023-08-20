@@ -179,9 +179,14 @@ def main(collectionName):
                 print(time.asctime(time.localtime(time.time())))
                 print('正在检索', weblist["name"], '页面更新')
                 url = weblist["url"]
+                print("url")
+                print(url)
                 response = requests.get(url, headers=UserAgent(),timeout=(55,55)).content
+                print(response)
+                print('file_pathhanshiyaobu.txt4')
                 soup = BeautifulSoup(response, 'html.parser', from_encoding='utf-8')
                 title = soup.select(weblist["titleslect"])[0].get_text()
+                print('file_pathhanshiyaobu.txt5')
                 print(weblist["name"] +"新的网页内容是" + title)
                 print(weblist["name"] +"旧的网页内容是" + weblist["title"])      
                 if title == weblist["title"] :    # 开关       
