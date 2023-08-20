@@ -182,14 +182,17 @@ def main(collectionName):
                 print("url")
                 print(url)
                 response = requests.get(url, headers=UserAgent(),timeout=(55,55)).content
-                print(response)
+                
                 print('file_pathhanshiyaobu.txt4')
                 soup = BeautifulSoup(response, 'html.parser', from_encoding='utf-8')
                 title = soup.select(weblist["titleslect"])[0].get_text()
                 print('file_pathhanshiyaobu.txt5')
                 print(weblist["name"] +"新的网页内容是" + title)
-                print(weblist["name"] +"旧的网页内容是" + weblist["title"])      
-                if title == weblist["title"] :    # 开关       
+                print(weblist["name"] +"旧的网页内容是" + weblist["title"])  
+                print('file_pathhanshiyaobu.txt6')
+                if True:    # 开关
+                # if title == weblist["title"] :    # 开关       
+                    print('file_pathhanshiyaobu.txt7')
                     try:
                         try:
                             nation = soup.select(weblist["nationslect"])[0].get_text()
