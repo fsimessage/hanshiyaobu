@@ -206,7 +206,7 @@ def main2(collectionName):
                 time.sleep(2)
                 titles = driver.find_element(By.CSS_SELECTOR,weblist["titleslect"])
                 title = titles.text
-                print("newis" +title)
+                print("newis")
                 # response = requests.get(url, headers=UserAgent(),timeout=(55,55)).content
                 
                 # print('file_pathhanshiyaobu.txt4')
@@ -648,7 +648,7 @@ def main(collectionName):
 
 if __name__ == '__main__':
     try:
-        main('test')
+        main2('test')
     except Exception as e:
         print(f"程序异常,错误:{e}")
 
