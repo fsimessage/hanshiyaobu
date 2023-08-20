@@ -3,7 +3,7 @@ import json
 import time
 import random
 import hashlib
-
+from bs4 import BeautifulSoup
 import cpca
 from datetime import datetime
 from easygoogletranslate import EasyGoogleTranslate
