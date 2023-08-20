@@ -8,7 +8,7 @@ import cpca
 from datetime import datetime
 from easygoogletranslate import EasyGoogleTranslate
 import random
-
+import os
 class DB:
 
     def __init__(self):
