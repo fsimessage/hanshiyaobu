@@ -459,7 +459,7 @@ def main(collectionName):
                             print(nation)
                             
                             nation_translation = translationBD(nation)
-                            nation_translation2 = translate_text(EasyGoogleTranslate, nation):
+                            nation_translation2 = translate_text(EasyGoogleTranslate, nation)
                             print("国家是：" + nation_translation2)
                         else:
                             nation = "None"
@@ -474,7 +474,7 @@ def main(collectionName):
                         
                         if product:
                             product_translation = translationBD(product)
-                            product_translation2 = translate_text(EasyGoogleTranslate, product):
+                            product_translation2 = translate_text(EasyGoogleTranslate, product)
                             print("产品是：" + product_translation2)
 
                         else:
@@ -503,7 +503,7 @@ def main(collectionName):
                         
                         if content:
                             content_translation = translationBD(content)
-                            content_translation2 = translate_text(EasyGoogleTranslate, content):
+                            content_translation2 = translate_text(EasyGoogleTranslate, content)
                             print("内容是：" + content_translation2)
 
                         else:
