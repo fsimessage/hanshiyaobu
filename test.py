@@ -428,88 +428,66 @@ def main(collectionName):
         try:
             dir_path = os.path.dirname(os.path.abspath(__file__))
             file_path = os.path.join(dir_path, "hanshiyaobu.txt")
-            print('file_pathhanshiyaobu.txt')
+            
             web_data = json.loads(open(file_path, 'r', encoding='utf_8_sig').read())
-            print('file_pathhanshiyaobu.txt2')
+            
             for weblist in web_data["cities"][0:1]:
-                print('file_pathhanshiyaobu.txt3')
+                
                 print(time.asctime(time.localtime(time.time())))
                 print('正在检索', weblist["name"], '页面更新')
                 url = weblist["url"]
-                print("url")
-                print(url)
                 response = requests.get(url, headers=UserAgent(),timeout=(55,55)).content
-                
-                print('file_pathhanshiyaobu.txt4')
                 soup = BeautifulSoup(response, 'html.parser', from_encoding='utf-8')
-                print(weblist["titleslect"])
                 title = soup.select(weblist["titleslect"])[0].get_text()
-                print('file_pathhanshiyaobu.txt6')
                 print(weblist["name"] +"新的网页内容是" + title)
                 print(weblist["name"] +"旧的网页内容是" + weblist["title"])  
-                print('file_pathhanshiyaobu.txt6')
-                if True:    # 开关
-                # if title == weblist["title"] :    # 开关       
-                    print('file_pathhanshiyaobu.txt7')
+                if title != weblist["title"] :    # 开关       
                     try:
                         try:
                             nation = soup.select(weblist["nationslect"])[0].get_text()
                         except IndexError:
                             nation = "未获取到国家信息"
-                            print(nation)
-                        
                         if nation:
                             # 进行翻译
-                            print(nation)
-                            
-                            nation_translation = translationBD(nation)
-                            nation_translation2 = translate_text(googletranslator, nation)
-                            print("国家是：" + nation_translation2)
+                            # nation_translation = translationBD(nation)
+                            nation_translation = translate_text(googletranslator, nation)
+                            print("国家是：" + nation_translation)
                         else:
                             nation = "None"
-                            print("国家变量为空")
-                        
+                            print("国家变量为空")                        
                         # 获取产品信息
                         try:
                             product = soup.select(weblist["productslect"])[0].get_text()
                         except IndexError:
                             product = "未获取到产品信息"
-                            print(product)
-                        
+                            print(product)                     
                         if product:
-                            product_translation = translationBD(product)
-                            product_translation2 = translate_text(googletranslator, product)
-                            print("产品是：" + product_translation2)
-
+                            # product_translation = translationBD(product)
+                            product_translation = translate_text(googletranslator, product)
+                            print("产品是：" + product_translation)
                         else:
                             product = "None"
-                            print("产品变量为空")
-                        
+                            print("产品变量为空")                        
                         # 获取英文产品信息
                         try:
                             enproduct = soup.select(weblist["enproductslect"])[0].get_text()
                         except IndexError:
-                            enproduct = "NONE"
-                        
+                            enproduct = "NONE"                        
                         if enproduct:
-                            enproduct_translation = translationBDE(enproduct)
+                            # enproduct_translation = translationBDE(enproduct)
+                            enproduct_translation = translate_text(googletranslator, enproduct)
                             print("英文产品是：" + enproduct_translation)
-
                         else:
                             enproduct_translation = "英文产品变量为空"
-                            print("英文产品变量为空")
-                        
                         # 获取内容信息
                         try:
                             content = soup.select(weblist["contentslect"])[0].get_text()
                         except IndexError:
-                            content = "未获取到内容信息"
-                        
+                            content = "未获取到内容信息"                    
                         if content:
-                            content_translation = translationBD(content)
-                            content_translation2 = translate_text(googletranslator, content)
-                            print("内容是：" + content_translation2)
-
+                            # content_translation = translationBD(content)
+                            content_translation = translate_text(googletranslator, content)
+                            print("内容是：" + content_translation)
                         else:
                             content_translation = "内容变量为空"
                             print("内容变量为空")
@@ -523,23 +501,17 @@ def main(collectionName):
                             print(baozhidate)
 
                         else:
-                            baozhidate = ""
-                        
-                        
+                            baozhidate = ""                        
                         # 获取公司信息
                         try:
                             company = soup.select(weblist["companyslect"])[0].get_text()
                         except IndexError:
-                            company = "未获取到公司信息"
-                        
+                            company = "未获取到公司信息"                      
                         if company:
-                            company_translation = translationBDE(company)
-
+                            # company_translation = translationBDE(company)
+                            company_translation = translate_text(googletranslator, company)
                             print("公司是：" + company_translation)
-
-                            
-                            # 对公司名称进行地址解析
-        
+                            # 对公司名称进行地址解析      
                             address = "中国"            
                             try:
                                 ret = cpca.transform_text_with_addrs(company_translation, pos_sensitive=True)
@@ -557,23 +529,15 @@ def main(collectionName):
                         
                 # 省略其他翻译逻辑
                     current_datetime = datetime.now()
-
                     # 将日期时间格式化为指定格式
                     formatted_date = current_datetime.strftime('%Y-%m-%d')
-
                     # 输出格式化后的日期
                     print(formatted_date)
                     current_timestamp = int(time.time())
                     print("Current Timestamp:", current_timestamp)
-                    Orgincontent = nation + product + content
-                    
+                    Orgincontent = nation + product + content + company
 
-                    translator = EasyGoogleTranslate(
-                        source_language='ko',
-                        target_language='zh-CN',
-                        timeout=10
-                    )
-                    Orgincontenttranslate = translator.translate(Orgincontent)
+                    Orgincontenttranslate = translationBD(Orgincontent)
 
                     print(Orgincontenttranslate) 
                      
@@ -633,10 +597,10 @@ def main(collectionName):
                     urlnotice = "http://wxpusher.zjiecode.com/api/send/message/?appToken=AT_zNMq0y9vMvgbelbxmTqwd7xCYb7mDFJT&content="+ weblist["name"] + weblist["title"] + Orgincontenttranslate +"&uid=UID_Yfd6ZRU7rWQVCcFYXAus5IfNGQsP&url=http%3a%2f%2fwxpusher.zjiecode.com"
                     requests.get(urlnotice)
                     print('已发送微信')
-                    # message = "韩国通报" + title + "（通报号：无）/国家地区：韩国/发布机构：食药部/企业：/采取措施：境外通报/" + "网址：" + weblist["url"]
+                    message = "韩国通报" + title + nation_translation + "（通报号：无）/国家地区：韩国/发布机构：食药部/企业：/采取措施：境外通报/" + "网址：" + weblist["url"]
 
-                    # sendwxmessage(message)
-                    # print(message)
+                    sendwxmessage(message)
+                    print(message)
                 
 
         except Exception as e:
