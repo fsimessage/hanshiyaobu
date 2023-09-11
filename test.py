@@ -439,7 +439,7 @@ def main(collectionName):
                 print('file_pathhanshiyaobu.txt4')
                 soup = BeautifulSoup(response, 'html.parser', from_encoding='utf-8')
                 print(weblist["titleslect"])
-                # print(soup)
+                print(soup)
                 title2 = soup.select(weblist["titleslect"])[0]
                 print(title2)
                 print('file_pathhanshiyaobu.txt5')
