@@ -441,7 +441,7 @@ def main(collectionName):
                 title = soup.select(weblist["titleslect"])[0].get_text()
                 print(weblist["name"] +"新的网页内容是" + title)
                 print(weblist["name"] +"旧的网页内容是" + weblist["title"])  
-                if title != weblist["title"] :    # 开关       
+                if title == weblist["title"] :    # 开关       
                     try:
                         try:
                             nation = soup.select(weblist["nationslect"])[0].get_text()
@@ -597,7 +597,7 @@ def main(collectionName):
                     urlnotice = "http://wxpusher.zjiecode.com/api/send/message/?appToken=AT_zNMq0y9vMvgbelbxmTqwd7xCYb7mDFJT&content="+ weblist["name"] + weblist["title"] + Orgincontenttranslate +"&uid=UID_Yfd6ZRU7rWQVCcFYXAus5IfNGQsP&url=http%3a%2f%2fwxpusher.zjiecode.com"
                     requests.get(urlnotice)
                     print('已发送微信')
-                    message = "韩国通报" + title + nation_translation + "（通报号：无）/国家地区：韩国/发布机构：食药部/企业：/采取措施：境外通报/" + "网址：" + weblist["url"]
+                    message = "测试消息忽略韩国通报" + title + nation_translation + "（通报号：无）/国家地区：韩国/发布机构：食药部/企业：/采取措施：境外通报/" + "网址：" + weblist["url"]
 
                     sendwxmessage(message)
                     print(message)
