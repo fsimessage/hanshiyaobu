@@ -648,7 +648,7 @@ def main(collectionName):
 
 if __name__ == '__main__':
     try:
-        main2('test')
+        main('test')
     except Exception as e:
         print(f"程序异常,错误:{e}")
 
