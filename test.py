@@ -132,7 +132,11 @@ def sendwxmessage(message):
     data = json.dumps(data)
     r = requests.post(f'https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={ACCESS_TOKEN}',
                       data=data)
-
+googletranslator = EasyGoogleTranslate(
+    source_language='ko',
+    target_language='zh-CN',
+    timeout=10
+)
 def translate_text(translator, text):
     """
     使用翻译器进行翻译，处理网络错误
@@ -459,7 +463,7 @@ def main(collectionName):
                             print(nation)
                             
                             nation_translation = translationBD(nation)
-                            nation_translation2 = translate_text(EasyGoogleTranslate, nation)
+                            nation_translation2 = translate_text(googletranslator, nation)
                             print("国家是：" + nation_translation2)
                         else:
                             nation = "None"
@@ -474,7 +478,7 @@ def main(collectionName):
                         
                         if product:
                             product_translation = translationBD(product)
-                            product_translation2 = translate_text(EasyGoogleTranslate, product)
+                            product_translation2 = translate_text(googletranslator, product)
                             print("产品是：" + product_translation2)
 
                         else:
@@ -503,7 +507,7 @@ def main(collectionName):
                         
                         if content:
                             content_translation = translationBD(content)
-                            content_translation2 = translate_text(EasyGoogleTranslate, content)
+                            content_translation2 = translate_text(googletranslator, content)
                             print("内容是：" + content_translation2)
 
                         else:
