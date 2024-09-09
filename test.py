@@ -515,10 +515,10 @@ def main(collectionName):
                             address = "中国"            
                             try:
                                 ret = cpca.transform_text_with_addrs(company_translation, pos_sensitive=True)
-                                address = f"{ret.loc[0, '省']}{ret.loc[0, '市']}"
+                                address = f"亚洲/{ret.loc[0, '省']}{ret.loc[0, '市']}"
                                 print("地址是：" + address)
                             except:
-                                address = "中国"
+                                address = "亚洲/中国"
                                 pass
                         else:
                             company_translation = "公司变量为空"
@@ -552,7 +552,7 @@ def main(collectionName):
                         "infoTitle": foodsafetitle,
                         "infoType": "1",
                         "prodCateName": "产品分类/其他植物源性食品类",
-                        "countryRegionName": "韩国",
+                        "countryRegionName": "亚洲/韩国",
                         "circularNumber": "",
                         "sourceArea": nation_translation,
                         "localAddress": address,
